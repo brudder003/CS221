@@ -1,0 +1,28 @@
+# Unit limit per quarter. You can ignore this for the first
+# few questions in problem 2.
+minUnits 8
+maxUnits 10
+
+# These are the quarters that I need to fill out.
+# It is assumed that the quarters are sorted in chronological order.
+register Win2017
+register Spr2017
+
+# Courses I've already taken
+taken ME218A
+taken ME218B
+taken ME218C
+taken CS221
+taken EE263
+taken ME320
+taken CS225A
+taken ME203
+taken ME110
+taken ENGR105
+taken ME328
+
+# Courses that I'm requesting
+request ME318 or CS229 or in Win2017, Spr2017 
+request ME300B or EE364A in Win2017
+request MS&E261 or MS&E245B in Win2017, Spr2017
+request CS246 in Spr2016    # Unsatisfiable request

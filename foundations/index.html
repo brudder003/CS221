@@ -1,0 +1,172 @@
+<head>
+  <title>Foundations</title>
+  <script src="plugins/main.js"></script>
+</head>
+
+<body onload="onLoad('foundations', 'Catherine Dong', 1)">
+
+<div id="assignmentHeader"></div>
+
+<p>
+Welcome to your first CS221 assignment!
+The goal of this assignment is to sharpen your math and programming skills
+needed for this class.  If you meet the prerequisites, you should find these
+problems relatively innocuous.  Some of these problems will occur again
+as subproblems of later homeworks, so make sure you know how to do them.
+</p>
+
+<!------------------------------------------------------------>
+<div class="problemTitle">Problem 1: Optimization and probability</div>
+
+<p>
+In this class, we will cast a lot of AI problems as optimization problems, that is, finding the best
+solution in a rigorous mathematical sense.
+At the same time, we must be adroit at coping with uncertainty in the world,
+and for that, we appeal to tools from probability.
+</p>
+
+<ol class="problem">
+
+<li class="writeup">
+[2 points] Let $b_1, \dots, b_n$ be real numbers representing positions on a number line.
+Let $w_1, \dots, w_n$ be positive numbers representing the importance of these positions.
+Define the quadratic function: $f(x) = \frac{1}{2} \sum_{i=1}^n w_i (x - b_i)^2$.
+What value $x$ minimizes $f(x)$?
+You can think about this problem as trying to find the point $x$ that's not too far
+away from the points $b_i$'s.
+Over time, hopefully you'll appreciate how nice quadratic functions are to minimize.
+What happens to this problem if some $w_i$'s are negative?
+</li>
+
+<li class="writeup">
+[3 points] In this class, there will be a lot of sums and maxes.
+Let's see what happens if we switch the order.
+Let $f(x) = \max_{a \in \{1,-1\}} \sum_{j=1}^d a x_j$
+and $g(x) = \sum_{j=1}^d \max_{a \in \{1,-1\}} a x_j$,
+where $x = (x_1, \dots, x_d) \in \mathbb{R}^d$ is a real vector.
+Does $f(x) \le g(x)$, $f(x) = g(x)$, or $f(x) \ge g(x)$ hold for all $x$?
+Prove it.
+<br/>Hint: You may find it helpul to refactor the expressions so they
+are maximizing the same quantity over different sized sets.
+</li>
+
+<li class="writeup">
+[3 points] Suppose you repeatedly roll a fair six-sided dice until the number of dots is $2$ or fewer (and then you're done).
+Every time the dice turns up with a $4$, you earn $r$ points.
+What is the expected number of total points (as a function of $r$) that you will earn before you're done?
+</li>
+
+<li class="writeup">
+[3 points] Suppose the probability of a coin turning up heads is $0 &lt; p &lt; 1$,
+and that we flip it 5 times and get $\{ \text{H}, \text{T}, \text{H}, \text{T}, \text{T} \}$.
+We know the probability (likelihood) of obtaining this
+sequence is $L(p) = p (1-p) p (1-p) (1-p) = p^2 (1-p)^3$.
+Now let's go backwards and ask the question: what is the value of $p$ that maximizes $L(p)$?
+<br/>Hint: Consider taking the derivative of $\log L(p)$. Taking the derivative of $L(p)$ works too,
+but it is cleaner and more natural to differentiate $\log L(p)$. You can verify for yourself
+that the value of $p$ which minimizes $\log L(p)$ must also minimize $L(p)$.
+</li>
+
+<li class="writeup">
+[3 points] Let's practice taking gradients,
+which is a key operation for being able to optimize continuous functions.
+For $\mathbf w \in \mathbb R^d$ and constants $a_i, b_j \in \mathbb R^d$ and $\lambda \in \mathbb R$, define
+the scalar-valued function
+$$f(\mathbf w) = \sum_{i=1}^n \sum_{j=1}^n (a_i^\top \mathbf w - b_j^\top \mathbf w)^2 + \lambda \|\mathbf w\|_2^2,$$
+where the vector is $\mathbf w = (w_1, \dots, w_d)$ and $\|\mathbf w\|_2 = \sqrt{\sum_{j=1}^d w_j^2}$ is known as the $L_2$ norm.
+Compute the gradient $\nabla f(\mathbf w)$. 
+<br/>Recall: the gradient is a $d$-dimensional vector of the partial derivatives with respect to each $w_i$:
+$$\nabla f(\mathbf w) = \left(\frac{\partial f(\mathbf w)}{\partial w_1}, \dots \frac{\partial f(\mathbf w)}{\partial w_d}\right).$$
+If you're not comfortable with vector calculus, first warm up by working out this problem using scalars in
+place of vectors and derivatives in place of gradients.
+Not everything for scalars goes through for vectors, but the two should at least be consistent with each other (when $d=1$).
+Do not write out summation over dimensions, because that gets tedious.
+</li>
+
+</ol>
+
+<!------------------------------------------------------------>
+<div class="problemTitle">Problem 2: Complexity</div>
+
+<p>
+When designing algorithms, it's useful to be able to do quick back of the
+envelope calculations to see how much time or space an algorithm needs.
+Hopefully, you'll start to get more intuition for this by being exposed
+to more types of problems.
+</p>
+
+<ol class="problem">
+
+<li class="writeup">
+[2 points] Suppose we have an image of a human face consisting of $n \times n$ pixels.
+In our simplified setting, a face consists of two eyes, two ears, and one mouth,
+each represented as an arbitrary axis-aligned rectangle (i.e. the axes of the
+rectangle are aligned with the axes of the image).  As we'd like
+to handle Picasso portraits too, there are no constraints on the location or
+size of the rectangles.
+How many possible faces (choice of its component rectangles) are there?
+In general, we only care about asymptotic complexity,
+so give your answer in the form of $O(n^c)$ or $O(c^n)$ for some integer $c$.
+</li>
+
+<li class="writeup">
+[3 points] Suppose we have $n$ cities on the number line: $1, 2, \dots, n$.
+Define a function $c(i, j)$ which returns the cost of going from city $i$
+to city $j$, and assume it takes constant time to compute.
+We want to travel from $1$ to $n$ via a set of intermediate cities, but only
+moving forwards.
+We can compute the minimum cost of doing this by defining
+the following recurrence: $f(j) = \min_{1 &le; i &lt; j} [c(i, j) + f(i)]$ for $j = 1, \dots, n$.
+Give an algorithm for computing $f(n)$ for a fixed $n$ in the most efficient way.
+What is the runtime (just give the big-O)?
+</li>
+
+<li class="writeup">
+[3 points] Suppose we have an $n \times n$ grid.
+How many ways are there to get from the upper-left corner to the lower-right corner
+if at each step you are only allowed to move down or right?
+Give your answer as a function of $n$.
+For example, if $n = 3$, then the answer is $6$.
+</li>
+
+<li class="writeup">
+[3 points] Consider the scalar-valued function $f(\mathbf w)$ from Problem 1e.
+Devise a strategy that first does preprocessing in $O(n d^2)$ time,
+and then for any given vector $\mathbf w$,
+takes $O(d^2)$ time instead to compute $f(\mathbf w)$.
+<br/>Hint: Refactor the algebraic expression; this is a classic trick used in machine learning.
+Again, you may find it helpful to work out the scalar case first.
+</li>
+
+</ol>
+
+<!------------------------------------------------------------>
+<div class="problemTitle">Problem 3: Programming</div> 
+
+<p>
+In this problem, you will implement a bunch of short functions.  The main
+purpose of this exercise is to familiarize yourself with Python,
+but as a bonus, the functions that you will implement will come in handy in
+subsequent homeworks.
+</p>
+
+<p>
+If you're new to Python, the following provide pointers to various
+tutorials and examples for the language:
+<ul>
+  <li><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">Python for Programmers</a></li>
+  <li><a href="http://wiki.python.org/moin/SimplePrograms">Example programs of increasing complexity</a></li>
+</ul>
+</p>
+<ol class="problem">
+
+<li class="code">[3 points] Implement <code>computeMaxWordLength</code> in <code>submission.py</code>.</li>
+<li class="code">[3 points] Implement <code>manhattanDistance</code> in <code>submission.py</code>.</li>
+<li class="code">[4 points] Implement <code>mutateSentences</code> in <code>submission.py</code>.</li>
+<li class="code">[3 points] Implement <code>dotProduct</code> in <code>submission.py</code>.</li>
+<li class="code">[3 points] Implement <code>incrementSparseVector</code> in <code>submission.py</code>.</li>
+<li class="code">[3 points] Implement <code>computeMostFrequentWord</code> in <code>submission.py</code>.</li>
+<li class="code">[5 points] Implement <code>computeLongestPalindrome</code> in <code>submission.py</code>.</li>
+
+</ol>
+</body>

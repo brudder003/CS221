@@ -1,0 +1,3 @@
+Version 1
+Version 2 - Fixed computation of bigram costs in shell.py
+Version 3 - Removed F() from the question, since it was puzzling some students
